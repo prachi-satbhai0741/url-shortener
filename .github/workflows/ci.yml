@@ -1,0 +1,39 @@
+name: URL Shortener CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download your code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build Docker image
+      - name: Build Docker image
+        run: docker build -t url-shortener .
+
+      # Test full stack
+      - name: Test full stack
+        run: |
+          docker network create url-network
+          docker run -d --name redis --network url-network redis:alpine
+          docker run -d -p 3000:3000 --name url-app \
+            --network url-network url-shortener
+          sleep 5
+          curl http://localhost:3000/
+          docker stop url-app redis
