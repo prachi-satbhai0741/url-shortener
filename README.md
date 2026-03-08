@@ -23,5 +23,4 @@ docker run -d -p 3000:3000 --name url-app --network url-network url-shortener
 ```
 
 
-## Author
-Prachi | 2nd Year CS | Learning DevOps 
+
