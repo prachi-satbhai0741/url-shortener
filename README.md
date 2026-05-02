@@ -24,14 +24,14 @@ Built like Bit.ly from scratch — but the real point is the infrastructure: **t
        ▼
 ┌─────────────────┐        Custom Docker Bridge Network (url-network)
 │   Node.js App   │ ──────────────────────────────────────────────────┐
-│  (Express API)  │                                                    │
+│  (Express API)  │                                                   │
 │   Port: 3000    │◄──── DNS: "redis" ────►  ┌─────────────────────┐  │
 └─────────────────┘                          │   Redis Container   │  │
         │                                    │   (In-memory store) │  │
         │                                    │   Port: 6379        │  │
         ▼                                    └─────────────────────┘  │
-  Short URL Response                                                   │
-                          └────────────────────────────────────────────┘
+  Short URL Response                                                  │
+                          └───────────────────────────────────────────┘
 
 Key: App container talks to Redis using container name "redis" as hostname
      — not localhost, not an IP. This is Docker bridge networking in action.
